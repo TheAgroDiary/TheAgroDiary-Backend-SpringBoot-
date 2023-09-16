@@ -1,8 +1,6 @@
 package mk.com.theagrodiarybackend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
@@ -13,6 +11,7 @@ import java.time.ZonedDateTime;
 public class Revenue {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long revenueId;
     private Float revenueSum;
     private ZonedDateTime date;

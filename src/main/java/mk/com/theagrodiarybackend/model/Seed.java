@@ -1,9 +1,7 @@
 package mk.com.theagrodiarybackend.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -11,6 +9,7 @@ import lombok.Data;
 public class Seed {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seedId;
     private String seedName;
     private Integer year;
