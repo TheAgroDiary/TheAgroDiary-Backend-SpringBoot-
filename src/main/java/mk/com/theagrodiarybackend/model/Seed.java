@@ -3,17 +3,20 @@ package mk.com.theagrodiarybackend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Seed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seedId;
+    @Column(nullable = false)
     private String seedName;
-    private Integer year;
 
-    @ManyToOne
-    private Person person;
+    public Seed(String seedName) {
+        this.seedName = seedName;
+    }
 }

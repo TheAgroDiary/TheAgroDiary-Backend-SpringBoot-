@@ -1,35 +1,34 @@
 package mk.com.theagrodiarybackend.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
-
-
 @Entity
 @Data
 @NoArgsConstructor
-public class Revenue {
+public class Yield {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long revenueId;
+    private Long yieldId;
     @Column(nullable = false)
-    private Float revenueSum;
-    private ZonedDateTime date;
+    private Float amountKg;
+    private String type;
     @Column(nullable = false)
-    private Float seedAmountKg;
+    private Integer year;
 
     @ManyToOne
     private Person person;
+
     @ManyToOne
     private Seed seed;
 
-    public Revenue(Float revenueSum, ZonedDateTime date, Float seedAmountKg, Person person, Seed seed) {
-        this.revenueSum = revenueSum;
-        this.date = date;
-        this.seedAmountKg = seedAmountKg;
+    public Yield(Float amountKg, String type, Integer year, Person person, Seed seed) {
+        this.amountKg = amountKg;
+        this.type = type;
+        this.year = year;
         this.person = person;
         this.seed = seed;
     }

@@ -10,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9091")
+//@CrossOrigin(origins = "http://localhost:9091")
+@CrossOrigin(origins = {"http://localhost:9091", "http://localhost:3000"})
 @RequestMapping(path = "/api/registration")
 @AllArgsConstructor
 public class RegistrationController {
