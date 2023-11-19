@@ -30,7 +30,8 @@ public class SeedServiceImpl implements SeedService {
 
     @Override
     public Optional<Seed> findById(Long seedId) {
-        return Optional.of(this.seedRepository.getReferenceById(seedId));
+        return Optional.of(this.seedRepository.findBySeedId(seedId))
+                .orElseThrow(() -> new SeedNotFoundException(seedId));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class SeedServiceImpl implements SeedService {
         Seed seed = this.seedRepository.findBySeedId(seedId)
                 .orElseThrow(() -> new SeedNotFoundException(seedId));
         if (seed != null) {
-            System.out.println("Seed is: " +seed.getSeedName());
+            System.out.println("Seed is: " + seed.getSeedName());
         }
         seed.setSeedName(seedDto.getSeedName());
         this.seedRepository.save(seed);

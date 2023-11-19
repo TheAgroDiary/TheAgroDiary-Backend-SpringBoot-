@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:9091")
+@CrossOrigin(origins = {"http://localhost:9091", "http://localhost:3000"})
 @RequestMapping(path = "/api/authentication")
 @AllArgsConstructor
 public class AuthenticationController {

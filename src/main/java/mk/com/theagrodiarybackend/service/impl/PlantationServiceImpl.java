@@ -45,15 +45,17 @@ public class PlantationServiceImpl implements PlantationService {
     public Optional<Plantation> save(PlantationDto plantationDto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Person person = new Person();
+        Person person = null;
+        Long seedId = plantationDto.getSeedId();
         Seed seed = this.seedRepository.findBySeedId(plantationDto.getSeedId())
-                .orElseThrow(() -> new SeedNotFoundException(plantationDto.getSeedId()));
+                .orElseThrow(() -> new SeedNotFoundException(seedId));
 
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             System.out.println("Current user is: " +username);
             Long personId = this.personRepository.getPersonIdByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username));
+            plantationDto.setPersonId(personId);
             System.out.println("Person id is " +personId);
             person = this.personRepository.findByPersonId(personId)
                     .orElseThrow(() -> new UserNotFoundException(personId));
@@ -63,7 +65,6 @@ public class PlantationServiceImpl implements PlantationService {
             person = this.personRepository.findByPersonId(plantationDto.getPersonId())
                     .orElseThrow(() -> new UserNotFoundException(plantationDto.getPersonId()));
         }
-
         Plantation plantation = new Plantation(
                 plantationDto.getAmountKg(), plantationDto.getType(), plantationDto.getYear(), person, seed);
         this.plantationRepository.save(plantation);
