@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class YieldNotFountException extends RuntimeException {
 
-    public YieldNotFountException(Long yieldId) {
+    public YieldNotFountException(Integer yieldId) {
         super(String.format("Yield with id: %d not found", yieldId));
     }
 }

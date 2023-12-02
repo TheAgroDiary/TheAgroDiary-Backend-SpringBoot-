@@ -14,6 +14,6 @@ public class RevenueDto {
     private Float revenueSum;
     private ZonedDateTime date;
     private Float seedAmountKg;
-    private Long personId;
-    private Long seedId;
+    private Integer personId;
+    private Integer seedId;
 }

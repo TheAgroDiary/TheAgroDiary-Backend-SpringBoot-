@@ -11,6 +11,6 @@ public class YieldDto {
     private Float amountKg;
     private String type;
     private Integer year;
-    private Long personId;
-    private Long seedId;
+    private Integer personId;
+    private Integer seedId;
 }

@@ -26,14 +26,14 @@ public class YieldController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Yield> edit(@PathVariable Long id, @RequestBody YieldDto yieldDto) {
+    public ResponseEntity<Yield> edit(@PathVariable Integer id, @RequestBody YieldDto yieldDto) {
         return this.yieldService.edit(id, yieldDto)
                 .map(yield -> ResponseEntity.ok().body(yield))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         this.yieldService.delete(id);
     }
 }

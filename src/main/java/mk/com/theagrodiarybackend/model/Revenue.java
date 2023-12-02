@@ -14,7 +14,7 @@ public class Revenue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long revenueId;
+    private Integer revenueId;
     @Column(nullable = false)
     private Float revenueSum;
     private ZonedDateTime date;

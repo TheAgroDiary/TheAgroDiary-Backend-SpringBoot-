@@ -37,7 +37,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Optional<Expense> findById(Long expenseId) {
+    public Optional<Expense> findById(Integer expenseId) {
         return Optional.of(this.expenseRepository.findByExpenseId(expenseId)
                 .orElseThrow(() -> new ExpenseNotFoundException(expenseId)));
     }
@@ -52,7 +52,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             System.out.println("Current user is: " +username);
-            Long personId = this.personRepository.getPersonIdByUsername(username)
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username));
             System.out.println("Person id is " +personId);
             person = this.personRepository.findByPersonId(personId)
@@ -72,7 +72,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Optional<Expense> edit(Long expenseId, ExpenseDto expenseDto) {
+    public Optional<Expense> edit(Integer expenseId, ExpenseDto expenseDto) {
         Expense expense = this.expenseRepository.findByExpenseId(expenseId)
                 .orElseThrow(() -> new ExpenseNotFoundException(expenseId));
         Seed seed = this.seedRepository.findBySeedId(expenseDto.getSeedId())
@@ -88,7 +88,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public void delete(Long expenseId) {
+    public void delete(Integer expenseId) {
         Expense expense = this.expenseRepository.findByExpenseId(expenseId)
                 .orElseThrow(() -> new ExpenseNotFoundException(expenseId));
         this.expenseRepository.delete(expense);

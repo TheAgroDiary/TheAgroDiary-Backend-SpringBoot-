@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface YieldService {
 
     List<Yield> findAll();
-    Optional<Yield> findById(Long yieldId);
+    Optional<Yield> findById(Integer yieldId);
     Optional<Yield> save(YieldDto yieldDto);
-    Optional<Yield> edit(Long yieldId, YieldDto yieldDto);
-    void delete(Long yieldId);
+    Optional<Yield> edit(Integer yieldId, YieldDto yieldDto);
+    void delete(Integer yieldId);
 }

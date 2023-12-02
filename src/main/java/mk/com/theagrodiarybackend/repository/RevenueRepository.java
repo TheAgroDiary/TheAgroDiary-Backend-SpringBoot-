@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RevenueRepository extends JpaRepository<Revenue, Long> {
+public interface RevenueRepository extends JpaRepository<Revenue, Integer> {
 
     @Query("select r from Revenue r where r.revenueId = :revenueId")
-    Optional<Revenue> findByRevenueId(Long revenueId);
+    Optional<Revenue> findByRevenueId(Integer revenueId);
 }

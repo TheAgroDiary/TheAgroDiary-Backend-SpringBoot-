@@ -36,7 +36,21 @@ public class PlantationServiceImpl implements PlantationService {
     }
 
     @Override
-    public Optional<Plantation> findById(Long plantationId) {
+    public List<Plantation> findAllByPerson() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Person person = null;
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.plantationRepository.findAllByPerson(personId);
+        }
+        return null;
+    }
+
+    @Override
+    public Optional<Plantation> findById(Integer plantationId) {
         return Optional.of(this.plantationRepository.findByPlantationId(plantationId))
                 .orElseThrow(() -> new PlantationNotFoundException(plantationId));
     }
@@ -46,14 +60,14 @@ public class PlantationServiceImpl implements PlantationService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Person person = null;
-        Long seedId = plantationDto.getSeedId();
+        Integer seedId = plantationDto.getSeedId();
         Seed seed = this.seedRepository.findBySeedId(plantationDto.getSeedId())
                 .orElseThrow(() -> new SeedNotFoundException(seedId));
 
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             System.out.println("Current user is: " +username);
-            Long personId = this.personRepository.getPersonIdByUsername(username)
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username));
             plantationDto.setPersonId(personId);
             System.out.println("Person id is " +personId);
@@ -72,7 +86,7 @@ public class PlantationServiceImpl implements PlantationService {
     }
 
     @Override
-    public Optional<Plantation> edit(Long plantationId, PlantationDto plantationDto) {
+    public Optional<Plantation> edit(Integer plantationId, PlantationDto plantationDto) {
         Plantation plantation = this.plantationRepository.findByPlantationId(plantationId)
                 .orElseThrow(() -> new PlantationNotFoundException(plantationId));
         Seed seed = this.seedRepository.findBySeedId(plantationDto.getSeedId())
@@ -86,7 +100,7 @@ public class PlantationServiceImpl implements PlantationService {
     }
 
     @Override
-    public void delete(Long plantationId) {
+    public void delete(Integer plantationId) {
         Plantation plantation = this.plantationRepository.findByPlantationId(plantationId)
                 .orElseThrow(() -> new PlantationNotFoundException(plantationId));
         this.plantationRepository.delete(plantation);

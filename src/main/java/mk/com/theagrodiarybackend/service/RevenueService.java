@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface RevenueService {
 
     List<Revenue> findAll();
-    Optional<Revenue> findById(Long revenueId);
+    Optional<Revenue> findById(Integer revenueId);
     Optional<Revenue> save(RevenueDto revenueDto);
-    Optional<Revenue> edit(Long revenueId, RevenueDto revenueDto);
-    void delete(Long revenueId);
+    Optional<Revenue> edit(Integer revenueId, RevenueDto revenueDto);
+    void delete(Integer revenueId);
 }

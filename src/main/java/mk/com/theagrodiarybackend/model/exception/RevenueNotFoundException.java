@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class RevenueNotFoundException extends RuntimeException {
 
-    public RevenueNotFoundException(Long revenueId) {
+    public RevenueNotFoundException(Integer revenueId) {
         super(String.format("Revenue with id: %d not found!", revenueId));
     }
 }

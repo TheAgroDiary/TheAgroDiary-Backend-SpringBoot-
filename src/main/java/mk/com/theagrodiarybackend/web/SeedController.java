@@ -30,13 +30,13 @@ public class SeedController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Seed> getById(@PathVariable Long id) {
+    public ResponseEntity<Seed> getById(@PathVariable Integer id) {
         return this.seedService.findById(id)
                 .map(seed -> ResponseEntity.ok().body(seed))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
     @PutMapping("/edit/{id}")
-    public ResponseEntity<Seed> edit(@PathVariable Long id, @RequestBody SeedDto seedDto) {
+    public ResponseEntity<Seed> edit(@PathVariable Integer id, @RequestBody SeedDto seedDto) {
         return this.seedService.edit(id, seedDto)
                 .map(seed -> ResponseEntity.ok().body(seed))
                 .orElseGet(() -> ResponseEntity.badRequest().build());

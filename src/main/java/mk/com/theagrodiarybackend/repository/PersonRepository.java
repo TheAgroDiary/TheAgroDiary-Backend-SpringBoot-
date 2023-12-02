@@ -9,12 +9,12 @@ import java.util.Optional;
 
 
 @Repository
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     Optional<Person> findByUsername(String username);
 
     @Query("select p from Person p where p.personId = :id")
-    Optional<Person> findByPersonId(Long id);
+    Optional<Person> findByPersonId(Integer id);
     @Query("select personId from Person where username = :username")
-    Optional<Long> getPersonIdByUsername(String username);
+    Optional<Integer> getPersonIdByUsername(String username);
 }

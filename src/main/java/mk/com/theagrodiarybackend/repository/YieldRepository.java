@@ -9,8 +9,8 @@ import java.util.Optional;
 
 
 @Repository
-public interface YieldRepository extends JpaRepository<Yield, Long> {
+public interface YieldRepository extends JpaRepository<Yield, Integer> {
 
     @Query("select y from Yield y where y.yieldId = :yieldId")
-    Optional<Yield> findByYieldId(Long yieldId);
+    Optional<Yield> findByYieldId(Integer yieldId);
 }

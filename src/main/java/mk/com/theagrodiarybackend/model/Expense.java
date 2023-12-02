@@ -14,7 +14,7 @@ public class Expense {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long expenseId;
+    private Integer expenseId;
     @Column(nullable = false)
     private Float expenseSum;
     private ZonedDateTime date;

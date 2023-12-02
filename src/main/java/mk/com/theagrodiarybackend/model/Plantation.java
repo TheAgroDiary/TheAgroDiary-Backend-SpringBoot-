@@ -12,7 +12,7 @@ public class Plantation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long plantationId;
+    private Integer plantationId;
     @Column(nullable = false)
     private Float amountKg;
     private String type;

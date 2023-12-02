@@ -9,8 +9,8 @@ import java.util.Optional;
 public interface ExpenseService {
 
     List<Expense> findAll();
-    Optional<Expense> findById(Long expenseId);
+    Optional<Expense> findById(Integer expenseId);
     Optional<Expense> save(ExpenseDto expenseDto);
-    Optional<Expense> edit(Long expenseId, ExpenseDto expenseDto);
-    void delete(Long expenseId);
+    Optional<Expense> edit(Integer expenseId, ExpenseDto expenseDto);
+    void delete(Integer expenseId);
 }

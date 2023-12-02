@@ -12,7 +12,7 @@ public class Yield {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long yieldId;
+    private Integer yieldId;
     @Column(nullable = false)
     private Float amountKg;
     private String type;

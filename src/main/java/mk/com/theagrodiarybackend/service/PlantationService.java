@@ -9,8 +9,9 @@ import java.util.Optional;
 public interface PlantationService {
 
     List<Plantation> findAll();
-    Optional<Plantation> findById(Long plantationId);
+    List<Plantation> findAllByPerson();
+    Optional<Plantation> findById(Integer plantationId);
     Optional<Plantation> save(PlantationDto plantationDto);
-    Optional<Plantation> edit(Long plantationId, PlantationDto plantationDto);
-    void delete(Long plantationId);
+    Optional<Plantation> edit(Integer plantationId, PlantationDto plantationDto);
+    void delete(Integer plantationId);
 }

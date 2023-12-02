@@ -36,7 +36,7 @@ public class YieldServiceImpl implements YieldService {
     }
 
     @Override
-    public Optional<Yield> findById(Long yieldId) {
+    public Optional<Yield> findById(Integer yieldId) {
         return Optional.of(this.yieldRepository.findByYieldId(yieldId)
                 .orElseThrow(() -> new YieldNotFountException(yieldId)));
     }
@@ -51,7 +51,7 @@ public class YieldServiceImpl implements YieldService {
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             System.out.println("Current user is: " +username);
-            Long personId = this.personRepository.getPersonIdByUsername(username)
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username));
             System.out.println("Person id is " +personId);
             person = this.personRepository.findByPersonId(personId)
@@ -70,7 +70,7 @@ public class YieldServiceImpl implements YieldService {
     }
 
     @Override
-    public Optional<Yield> edit(Long yieldId, YieldDto yieldDto) {
+    public Optional<Yield> edit(Integer yieldId, YieldDto yieldDto) {
         Yield yield = this.yieldRepository.findByYieldId(yieldId)
                 .orElseThrow(() -> new YieldNotFountException(yieldId));
         Seed seed = this.seedRepository.findBySeedId(yieldDto.getSeedId())
@@ -84,7 +84,7 @@ public class YieldServiceImpl implements YieldService {
     }
 
     @Override
-    public void delete(Long yieldId) {
+    public void delete(Integer yieldId) {
         Yield yield = this.yieldRepository.findByYieldId(yieldId)
                 .orElseThrow(() -> new YieldNotFountException(yieldId));
         this.yieldRepository.delete(yield);

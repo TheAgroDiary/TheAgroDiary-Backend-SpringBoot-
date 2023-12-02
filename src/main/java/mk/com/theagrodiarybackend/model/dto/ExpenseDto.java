@@ -16,6 +16,6 @@ public class ExpenseDto {
     private Float seedAmountKg;
     private String expenseType;
     private String description;
-    private Long personId;
-    private Long seedId;
+    private Integer personId;
+    private Integer seedId;
 }

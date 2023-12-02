@@ -12,7 +12,7 @@ public class Seed {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seedId;
+    private Integer seedId;
     @Column(nullable = false)
     private String seedName;
 

@@ -37,7 +37,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public Optional<Revenue> findById(Long revenueId) {
+    public Optional<Revenue> findById(Integer revenueId) {
         return Optional.of(this.revenueRepository.findByRevenueId(revenueId)
                 .orElseThrow(() -> new RevenueNotFoundException(revenueId)));
     }
@@ -52,7 +52,7 @@ public class RevenueServiceImpl implements RevenueService {
         if(authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             System.out.println("Current user is: " +username);
-            Long personId = this.personRepository.getPersonIdByUsername(username)
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException(username));
             System.out.println("Person id is " +personId);
             person = this.personRepository.findByPersonId(personId)
@@ -71,7 +71,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public Optional<Revenue> edit(Long revenueId, RevenueDto revenueDto) {
+    public Optional<Revenue> edit(Integer revenueId, RevenueDto revenueDto) {
         Revenue revenue = this.revenueRepository.findByRevenueId(revenueId)
                 .orElseThrow(() -> new RevenueNotFoundException(revenueId));
         Seed seed = this.seedRepository.findBySeedId(revenueDto.getSeedId())
@@ -85,7 +85,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public void delete(Long revenueId) {
+    public void delete(Integer revenueId) {
         Revenue revenue = this.revenueRepository.findByRevenueId(revenueId)
                 .orElseThrow(() -> new RevenueNotFoundException(revenueId));
         this.revenueRepository.delete(revenue);

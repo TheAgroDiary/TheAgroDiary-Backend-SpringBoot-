@@ -24,14 +24,14 @@ public class ExpenseController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Expense> edit(@PathVariable Long id, @RequestBody ExpenseDto expenseDto) {
+    public ResponseEntity<Expense> edit(@PathVariable Integer id, @RequestBody ExpenseDto expenseDto) {
         return this.expenseService.edit(id, expenseDto)
                 .map(expense -> ResponseEntity.ok().body(expense))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         this.expenseService.delete(id);
     }
 }

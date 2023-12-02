@@ -29,7 +29,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public Optional<Seed> findById(Long seedId) {
+    public Optional<Seed> findById(Integer seedId) {
         return Optional.of(this.seedRepository.findBySeedId(seedId))
                 .orElseThrow(() -> new SeedNotFoundException(seedId));
     }
@@ -50,7 +50,7 @@ public class SeedServiceImpl implements SeedService {
 //        if(authentication != null && authentication.isAuthenticated()) {
 //            String username = authentication.getName();
 //            System.out.println("Current user is: " +username);
-//            Long personId = this.personRepository.getPersonIdByUsername(username)
+//            Integer personId = this.personRepository.getPersonIdByUsername(username)
 //                    .orElseThrow(() -> new UsernameNotFoundException(username));
 //            System.out.println("Person id is " +personId);
 //            person = this.personRepository.findByPersonId(personId)
@@ -67,7 +67,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public Optional<Seed> edit(Long seedId, SeedDto seedDto) {
+    public Optional<Seed> edit(Integer seedId, SeedDto seedDto) {
         Seed seed = this.seedRepository.findBySeedId(seedId)
                 .orElseThrow(() -> new SeedNotFoundException(seedId));
         if (seed != null) {

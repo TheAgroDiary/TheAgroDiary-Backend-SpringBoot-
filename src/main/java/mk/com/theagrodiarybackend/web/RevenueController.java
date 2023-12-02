@@ -24,14 +24,14 @@ public class RevenueController {
     }
 
     @PostMapping("/edit/{id}")
-    public ResponseEntity<Revenue> edit(@PathVariable Long id, @RequestBody RevenueDto revenueDto) {
+    public ResponseEntity<Revenue> edit(@PathVariable Integer id, @RequestBody RevenueDto revenueDto) {
         return this.revenueService.edit(id, revenueDto)
                 .map(revenue -> ResponseEntity.ok().body(revenue))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         this.revenueService.delete(id);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class SeedNotFoundException extends RuntimeException {
 
-    public SeedNotFoundException(Long seedId) {
+    public SeedNotFoundException(Integer seedId) {
         super(String.format("Seed with id: %d not found", seedId));
     }
 }

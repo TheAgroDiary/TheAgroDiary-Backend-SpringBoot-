@@ -23,25 +23,30 @@ public class PlantationController {
     public List<Plantation> listAll(){
         return this.plantationService.findAll();
     }
+
+    @GetMapping("/my")
+    public List<Plantation> listAllByPerson (){
+        return this.plantationService.findAllByPerson();
+    }
     @PostMapping("/add")
     public ResponseEntity<Plantation> save(@RequestBody PlantationDto plantationDto, Authentication authentication) {
         String username = authentication.getName();
-        plantationDto.setPersonId(14L);
+//        plantationDto.setPersonId(14);
 //        plantationDto.setSeedId(3L);
         return this.plantationService.save(plantationDto)
                 .map(plantation -> ResponseEntity.ok().body(plantation))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/edit/{id}")
-    public ResponseEntity<Plantation> edit(@PathVariable Long id, @RequestBody PlantationDto plantationDto) {
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Plantation> edit(@PathVariable Integer id, @RequestBody PlantationDto plantationDto) {
         return this.plantationService.edit(id, plantationDto)
                 .map(plantation -> ResponseEntity.ok().body(plantation))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Integer id) {
         this.plantationService.delete(id);
     }
 }

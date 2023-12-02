@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface SeedService {
 
     List<Seed> findAll();
-    Optional<Seed> findById(Long seedId);
+    Optional<Seed> findById(Integer seedId);
     Optional<Seed> findByName(String seedName);
     Optional<Seed> save(SeedDto seedDto);
-    Optional<Seed> edit(Long seedId, SeedDto seedDto);
-//    void delete(Long seedId);
+    Optional<Seed> edit(Integer seedId, SeedDto seedDto);
+//    void delete(Integer seedId);
 }
