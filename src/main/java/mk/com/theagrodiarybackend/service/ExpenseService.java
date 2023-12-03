@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface ExpenseService {
 
     List<Expense> findAll();
+    List<Expense> findAllByPerson();
     Optional<Expense> findById(Integer expenseId);
     Optional<Expense> save(ExpenseDto expenseDto);
     Optional<Expense> edit(Integer expenseId, ExpenseDto expenseDto);

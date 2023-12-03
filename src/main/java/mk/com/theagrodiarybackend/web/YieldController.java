@@ -10,8 +10,10 @@ import mk.com.theagrodiarybackend.service.YieldService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:9091")
+@CrossOrigin(origins = {"http://localhost:9091", "http://localhost:3000"})
 @RequestMapping(path = "/api/yield")
 @AllArgsConstructor
 public class YieldController {
@@ -25,7 +27,11 @@ public class YieldController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/edit/{id}")
+    @GetMapping("/my")
+    public List<Yield> listAllByPerson (){
+        return this.yieldService.findAllByPerson();
+    }
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Yield> edit(@PathVariable Integer id, @RequestBody YieldDto yieldDto) {
         return this.yieldService.edit(id, yieldDto)
                 .map(yield -> ResponseEntity.ok().body(yield))

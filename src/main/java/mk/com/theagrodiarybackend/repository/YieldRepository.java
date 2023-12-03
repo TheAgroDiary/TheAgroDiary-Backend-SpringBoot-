@@ -1,10 +1,12 @@
 package mk.com.theagrodiarybackend.repository;
 
+import mk.com.theagrodiarybackend.model.Plantation;
 import mk.com.theagrodiarybackend.model.Yield;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -13,4 +15,7 @@ public interface YieldRepository extends JpaRepository<Yield, Integer> {
 
     @Query("select y from Yield y where y.yieldId = :yieldId")
     Optional<Yield> findByYieldId(Integer yieldId);
+
+    @Query("select y from Yield y where y.person.personId = :person_id")
+    List<Yield> findAllByPerson(Integer person_id);
 }

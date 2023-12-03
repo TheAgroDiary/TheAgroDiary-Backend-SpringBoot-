@@ -20,8 +20,6 @@ public class Expense {
     private ZonedDateTime date;
     @Column(nullable = false)
     private Float seedAmountKg;
-    @Column(nullable = false)
-    private String expenseType;
     private String description;
 
     @ManyToOne
@@ -29,14 +27,17 @@ public class Expense {
     @ManyToOne
     private Seed seed;
 
-    public Expense(Float expenseSum, ZonedDateTime date, Float seedAmountKg, String expenseType,
-                   String description, Person person, Seed seed) {
+    @ManyToOne
+    private Category category;
+
+    public Expense(Float expenseSum, ZonedDateTime date, Float seedAmountKg,
+                   String description, Person person, Seed seed, Category category) {
         this.expenseSum = expenseSum;
         this.date = date;
         this.seedAmountKg = seedAmountKg;
-        this.expenseType = expenseType;
         this.description = description;
         this.person = person;
         this.seed = seed;
+        this.category = category;
     }
 }

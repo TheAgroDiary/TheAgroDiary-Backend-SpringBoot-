@@ -8,6 +8,8 @@ import mk.com.theagrodiarybackend.service.ExpenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:9091")
 @RequestMapping(path = "/api/expense")
@@ -21,6 +23,11 @@ public class ExpenseController {
         return this.expenseService.save(expenseDto)
                 .map(expense -> ResponseEntity.ok().body(expense))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("/my")
+    public List<Expense> listAllByPerson (){
+        return this.expenseService.findAllByPerson();
     }
 
     @PostMapping("/edit/{id}")

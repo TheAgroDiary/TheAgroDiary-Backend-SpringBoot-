@@ -14,8 +14,8 @@ public class ExpenseDto {
     private Float expenseSum;
     private ZonedDateTime date;
     private Float seedAmountKg;
-    private String expenseType;
     private String description;
     private Integer personId;
     private Integer seedId;
+    private Integer categoryId;
 }

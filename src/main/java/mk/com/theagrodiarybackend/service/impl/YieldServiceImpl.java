@@ -36,6 +36,19 @@ public class YieldServiceImpl implements YieldService {
     }
 
     @Override
+    public List<Yield> findAllByPerson() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.yieldRepository.findAllByPerson(personId);
+        }
+        return null;
+    }
+
+    @Override
     public Optional<Yield> findById(Integer yieldId) {
         return Optional.of(this.yieldRepository.findByYieldId(yieldId)
                 .orElseThrow(() -> new YieldNotFountException(yieldId)));

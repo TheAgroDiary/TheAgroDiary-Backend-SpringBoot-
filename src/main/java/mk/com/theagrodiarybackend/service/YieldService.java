@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface YieldService {
 
     List<Yield> findAll();
+    List<Yield> findAllByPerson();
     Optional<Yield> findById(Integer yieldId);
     Optional<Yield> save(YieldDto yieldDto);
     Optional<Yield> edit(Integer yieldId, YieldDto yieldDto);
