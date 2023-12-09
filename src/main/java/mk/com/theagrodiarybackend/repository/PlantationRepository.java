@@ -15,6 +15,6 @@ public interface PlantationRepository extends JpaRepository<Plantation, Integer>
     @Query("select p from Plantation p where p.plantationId = :plantationId")
     Optional<Plantation> findByPlantationId(Integer plantationId);
 
-    @Query("select p from Plantation p where p.person.personId = :person_id")
-    List<Plantation> findAllByPerson(Integer person_id);
+    @Query("select p from Plantation p where p.person.personId = :personId")
+    List<Plantation> findAllByPerson(Integer personId);
 }

@@ -4,7 +4,7 @@ package mk.com.theagrodiarybackend.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 
 @Data
@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 public class ExpenseDto {
 
     private Float expenseSum;
-    private ZonedDateTime date;
+    private Date date;
     private Float seedAmountKg;
     private String description;
     private Integer personId;

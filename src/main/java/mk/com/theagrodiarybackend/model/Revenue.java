@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -17,7 +17,7 @@ public class Revenue {
     private Integer revenueId;
     @Column(nullable = false)
     private Float revenueSum;
-    private ZonedDateTime date;
+    private Date date;
     @Column(nullable = false)
     private Float seedAmountKg;
 
@@ -26,7 +26,7 @@ public class Revenue {
     @ManyToOne
     private Seed seed;
 
-    public Revenue(Float revenueSum, ZonedDateTime date, Float seedAmountKg, Person person, Seed seed) {
+    public Revenue(Float revenueSum, Date date, Float seedAmountKg, Person person, Seed seed) {
         this.revenueSum = revenueSum;
         this.date = date;
         this.seedAmountKg = seedAmountKg;

@@ -35,6 +35,19 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
+    public List<Revenue> findAllByPerson() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.revenueRepository.findAllByPerson(personId);
+        }
+        return null;
+    }
+
+    @Override
     public Optional<Revenue> findById(Integer revenueId) {
         return Optional.of(this.revenueRepository.findByRevenueId(revenueId)
                 .orElseThrow(() -> new RevenueNotFoundException(revenueId)));

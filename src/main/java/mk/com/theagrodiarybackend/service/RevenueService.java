@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface RevenueService {
 
     List<Revenue> findAll();
+    List<Revenue> findAllByPerson();
     Optional<Revenue> findById(Integer revenueId);
     Optional<Revenue> save(RevenueDto revenueDto);
     Optional<Revenue> edit(Integer revenueId, RevenueDto revenueDto);

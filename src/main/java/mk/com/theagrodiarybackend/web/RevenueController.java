@@ -8,6 +8,8 @@ import mk.com.theagrodiarybackend.service.RevenueService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:9091")
 @RequestMapping(path = "/api/revenue")
@@ -23,7 +25,11 @@ public class RevenueController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
-    @PostMapping("/edit/{id}")
+    @GetMapping("/my")
+    public List<Revenue> listAllByPerson (){
+        return this.revenueService.findAllByPerson();
+    }
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Revenue> edit(@PathVariable Integer id, @RequestBody RevenueDto revenueDto) {
         return this.revenueService.edit(id, revenueDto)
                 .map(revenue -> ResponseEntity.ok().body(revenue))

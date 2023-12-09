@@ -15,6 +15,6 @@ public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
     @Query("select e from Expense e where e.expenseId = :expenseId")
     Optional<Expense> findByExpenseId(Integer expenseId);
 
-    @Query("select  e from Expense e where e.person.personId = :person_id")
-    List<Expense> findAllByPerson(Integer person_id);
+    @Query("select  e from Expense e where e.person.personId = :personId")
+    List<Expense> findAllByPerson(Integer personId);
 }

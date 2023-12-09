@@ -30,7 +30,7 @@ public class ExpenseController {
         return this.expenseService.findAllByPerson();
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Expense> edit(@PathVariable Integer id, @RequestBody ExpenseDto expenseDto) {
         return this.expenseService.edit(id, expenseDto)
                 .map(expense -> ResponseEntity.ok().body(expense))

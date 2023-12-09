@@ -5,7 +5,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import mk.com.theagrodiarybackend.service.TokenBlacklistService;
 import mk.com.theagrodiarybackend.service.jwt.UserDetailsServiceImpl;
 import mk.com.theagrodiarybackend.util.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

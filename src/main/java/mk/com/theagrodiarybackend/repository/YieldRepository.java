@@ -16,6 +16,6 @@ public interface YieldRepository extends JpaRepository<Yield, Integer> {
     @Query("select y from Yield y where y.yieldId = :yieldId")
     Optional<Yield> findByYieldId(Integer yieldId);
 
-    @Query("select y from Yield y where y.person.personId = :person_id")
-    List<Yield> findAllByPerson(Integer person_id);
+    @Query("select y from Yield y where y.person.personId = :personId")
+    List<Yield> findAllByPerson(Integer personId);
 }
