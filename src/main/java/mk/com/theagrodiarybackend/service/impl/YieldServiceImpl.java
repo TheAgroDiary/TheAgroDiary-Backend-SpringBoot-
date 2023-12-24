@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,9 +76,9 @@ public class YieldServiceImpl implements YieldService {
             person = this.personRepository.findByPersonId(yieldDto.getPersonId())
                     .orElseThrow(() -> new UserNotFoundException(yieldDto.getPersonId()));
         }
-
+        yieldDto.setUpdatedAt(new Date());
         Yield yield = new Yield(
-                yieldDto.getAmountKg(), yieldDto.getType(), yieldDto.getYear(), person, seed);
+                yieldDto.getAmountKg(), yieldDto.getType(), yieldDto.getYear(), yieldDto.getUpdatedAt(), person, seed);
         this.yieldRepository.save(yield);
         return Optional.of(yield);
     }
@@ -91,6 +92,7 @@ public class YieldServiceImpl implements YieldService {
         yield.setAmountKg(yieldDto.getAmountKg());
         yield.setType(yieldDto.getType());
         yield.setYear(yieldDto.getYear());
+        yield.setUpdatedAt(new Date());
         yield.setSeed(seed);
         this.yieldRepository.save(yield);
         return Optional.of(yield);

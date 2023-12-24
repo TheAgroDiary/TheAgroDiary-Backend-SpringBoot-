@@ -21,15 +21,18 @@ public class Revenue {
     @Column(nullable = false)
     private Float seedAmountKg;
 
+    private Date updatedAt;
+
     @ManyToOne
     private Person person;
     @ManyToOne
     private Seed seed;
 
-    public Revenue(Float revenueSum, Date date, Float seedAmountKg, Person person, Seed seed) {
+    public Revenue(Float revenueSum, Date date, Float seedAmountKg, Date updatedAt, Person person, Seed seed) {
         this.revenueSum = revenueSum;
         this.date = date;
         this.seedAmountKg = seedAmountKg;
+        this.updatedAt = updatedAt;
         this.person = person;
         this.seed = seed;
     }

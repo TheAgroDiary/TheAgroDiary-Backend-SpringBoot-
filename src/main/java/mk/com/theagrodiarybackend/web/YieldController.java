@@ -1,11 +1,8 @@
 package mk.com.theagrodiarybackend.web;
 
 import lombok.AllArgsConstructor;
-import mk.com.theagrodiarybackend.model.Plantation;
 import mk.com.theagrodiarybackend.model.Yield;
-import mk.com.theagrodiarybackend.model.dto.PlantationDto;
 import mk.com.theagrodiarybackend.model.dto.YieldDto;
-import mk.com.theagrodiarybackend.service.PlantationService;
 import mk.com.theagrodiarybackend.service.YieldService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +28,14 @@ public class YieldController {
     public List<Yield> listAllByPerson (){
         return this.yieldService.findAllByPerson();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Yield> listById(@PathVariable Integer id) {
+        return this.yieldService.findById(id)
+                .map(yield -> ResponseEntity.ok().body(yield))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PutMapping("/edit/{id}")
     public ResponseEntity<Yield> edit(@PathVariable Integer id, @RequestBody YieldDto yieldDto) {
         return this.yieldService.edit(id, yieldDto)

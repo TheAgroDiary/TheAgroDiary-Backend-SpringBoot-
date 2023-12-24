@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,9 +75,9 @@ public class RevenueServiceImpl implements RevenueService {
             person = this.personRepository.findByPersonId(revenueDto.getPersonId())
                     .orElseThrow(() -> new UserNotFoundException(revenueDto.getPersonId()));
         }
-
+        revenueDto.setUpdatedAt(new Date());
         Revenue revenue = new Revenue(
-                revenueDto.getRevenueSum(), revenueDto.getDate(), revenueDto.getSeedAmountKg(), person, seed);
+                revenueDto.getRevenueSum(), revenueDto.getDate(), revenueDto.getSeedAmountKg(), revenueDto.getUpdatedAt(), person, seed);
         this.revenueRepository.save(revenue);
         return Optional.of(revenue);
     }
@@ -90,6 +91,7 @@ public class RevenueServiceImpl implements RevenueService {
         revenue.setRevenueSum(revenueDto.getRevenueSum());
         revenue.setDate(revenueDto.getDate());
         revenue.setSeedAmountKg(revenueDto.getSeedAmountKg());
+        revenue.setUpdatedAt(new Date());
         revenue.setSeed(seed);
         this.revenueRepository.save(revenue);
         return Optional.of(revenue);

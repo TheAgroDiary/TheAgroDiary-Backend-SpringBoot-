@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,10 +81,10 @@ public class ExpenseServiceImpl implements ExpenseService {
             person = this.personRepository.findByPersonId(expenseDto.getPersonId())
                     .orElseThrow(() -> new UserNotFoundException(expenseDto.getPersonId()));
         }
-
+        expenseDto.setUpdatedAt(new Date());
         Expense expense = new Expense(
                 expenseDto.getExpenseSum(), expenseDto.getDate(), expenseDto.getSeedAmountKg(),
-                expenseDto.getDescription(), person, seed, category);
+                expenseDto.getDescription(), expenseDto.getUpdatedAt(), person, seed, category);
         this.expenseRepository.save(expense);
         return Optional.of(expense);
     }
@@ -100,6 +101,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setDate(expenseDto.getDate());
         expense.setSeedAmountKg(expenseDto.getSeedAmountKg());
         expense.setDescription(expenseDto.getDescription());
+        expense.setUpdatedAt(new Date());
         expense.setSeed(seed);
         expense.setCategory(category);
         this.expenseRepository.save(expense);

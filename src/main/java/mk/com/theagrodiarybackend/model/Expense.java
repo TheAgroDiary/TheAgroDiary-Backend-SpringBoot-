@@ -18,12 +18,12 @@ public class Expense {
     private Integer expenseId;
     @Column(nullable = false)
     private Float expenseSum;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    
     private Date date;
     @Column(nullable = false)
     private Float seedAmountKg;
     private String description;
+    private Date updatedAt;
 
     @ManyToOne
     private Person person;
@@ -33,12 +33,13 @@ public class Expense {
     @ManyToOne
     private Category category;
 
-    public Expense(Float expenseSum, Date date, Float seedAmountKg,
-                   String description, Person person, Seed seed, Category category) {
+    public Expense(Float expenseSum, Date date, Float seedAmountKg, String description,
+                   Date updatedAt, Person person, Seed seed, Category category) {
         this.expenseSum = expenseSum;
         this.date = date;
         this.seedAmountKg = seedAmountKg;
         this.description = description;
+        this.updatedAt = updatedAt;
         this.person = person;
         this.seed = seed;
         this.category = category;

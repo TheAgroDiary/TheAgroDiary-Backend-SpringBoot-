@@ -15,6 +15,7 @@ public class ExpenseDto {
     private Date date;
     private Float seedAmountKg;
     private String description;
+    private Date updatedAt;
     private Integer personId;
     private Integer seedId;
     private Integer categoryId;

@@ -1,6 +1,5 @@
 package mk.com.theagrodiarybackend.web;
 
-
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Expense;
 import mk.com.theagrodiarybackend.model.dto.ExpenseDto;
@@ -30,6 +29,12 @@ public class ExpenseController {
         return this.expenseService.findAllByPerson();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Expense> listById(@PathVariable Integer id) {
+        return this.expenseService.findById(id)
+                .map(expense -> ResponseEntity.ok().body(expense))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
     @PutMapping("/edit/{id}")
     public ResponseEntity<Expense> edit(@PathVariable Integer id, @RequestBody ExpenseDto expenseDto) {
         return this.expenseService.edit(id, expenseDto)

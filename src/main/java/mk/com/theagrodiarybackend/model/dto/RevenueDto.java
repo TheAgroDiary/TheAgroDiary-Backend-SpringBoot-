@@ -14,6 +14,7 @@ public class RevenueDto {
     private Float revenueSum;
     private Date date;
     private Float seedAmountKg;
+    private Date updatedAt;
     private Integer personId;
     private Integer seedId;
 }

@@ -4,6 +4,8 @@ package mk.com.theagrodiarybackend.web;
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Plantation;
 import mk.com.theagrodiarybackend.model.dto.PlantationDto;
+import mk.com.theagrodiarybackend.model.dto.PlantationSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.PlantationSummaryByYearAndSeedAndType;
 import mk.com.theagrodiarybackend.service.PlantationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,11 +30,25 @@ public class PlantationController {
     public List<Plantation> listAllByPerson (){
         return this.plantationService.findAllByPerson();
     }
+
+    @GetMapping("/statistics1")
+    public List<PlantationSummaryByYearAndSeed> plantationSummaryByYearAndSeed () {
+        return this.plantationService.plantationSummaryByYearAndSeed();
+    }
+
+    @GetMapping("/statistics2")
+    public List<PlantationSummaryByYearAndSeedAndType> plantationSummaryByYearAndSeedAndType () {
+        return this.plantationService.plantationSummaryByYearAndSeedAndType();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Plantation> listById(@PathVariable Integer id) {
+        return this.plantationService.findById(id)
+                .map(plantation -> ResponseEntity.ok().body(plantation))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
     @PostMapping("/add")
     public ResponseEntity<Plantation> save(@RequestBody PlantationDto plantationDto, Authentication authentication) {
-        String username = authentication.getName();
-//        plantationDto.setPersonId(14);
-//        plantationDto.setSeedId(3L);
         return this.plantationService.save(plantationDto)
                 .map(plantation -> ResponseEntity.ok().body(plantation))
                 .orElseGet(() -> ResponseEntity.badRequest().build());

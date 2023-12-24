@@ -1,10 +1,13 @@
 package mk.com.theagrodiarybackend.service.impl;
 
+import jakarta.persistence.Tuple;
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Person;
 import mk.com.theagrodiarybackend.model.Plantation;
 import mk.com.theagrodiarybackend.model.Seed;
 import mk.com.theagrodiarybackend.model.dto.PlantationDto;
+import mk.com.theagrodiarybackend.model.dto.PlantationSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.PlantationSummaryByYearAndSeedAndType;
 import mk.com.theagrodiarybackend.model.exception.PlantationNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.SeedNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.UserNotFoundException;
@@ -17,8 +20,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -28,7 +33,6 @@ public class PlantationServiceImpl implements PlantationService {
     private PlantationRepository plantationRepository;
     private PersonRepository personRepository;
     private SeedRepository seedRepository;
-
 
     @Override
     public List<Plantation> findAll() {
@@ -47,6 +51,24 @@ public class PlantationServiceImpl implements PlantationService {
             return this.plantationRepository.findAllByPerson(personId);
         }
         return null;
+    }
+
+    @Override
+    public List<PlantationSummaryByYearAndSeed> plantationSummaryByYearAndSeed() {
+        List<Tuple> tuples = this.plantationRepository.countPlantationsByYearAndSeed();
+
+        return tuples.stream().map(tuple -> {
+            Integer year = tuple.get(0, Integer.class);
+            String seedName = tuple.get(1, String.class);
+            Double totalAmountKg = tuple.get(2, Double.class);
+
+            return new PlantationSummaryByYearAndSeed(year, seedName, totalAmountKg);
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<PlantationSummaryByYearAndSeedAndType> plantationSummaryByYearAndSeedAndType() {
+        return this.plantationRepository.countPlantationsByYearAndSeedAAndType();
     }
 
     @Override
@@ -79,8 +101,9 @@ public class PlantationServiceImpl implements PlantationService {
             person = this.personRepository.findByPersonId(plantationDto.getPersonId())
                     .orElseThrow(() -> new UserNotFoundException(plantationDto.getPersonId()));
         }
+        plantationDto.setUpdatedAt(new Date());
         Plantation plantation = new Plantation(
-                plantationDto.getAmountKg(), plantationDto.getType(), plantationDto.getYear(), person, seed);
+                plantationDto.getAmountKg(), plantationDto.getType(), plantationDto.getYear(), plantationDto.getUpdatedAt(), person, seed);
         this.plantationRepository.save(plantation);
         return Optional.of(plantation);
     }
@@ -94,6 +117,7 @@ public class PlantationServiceImpl implements PlantationService {
         plantation.setAmountKg(plantationDto.getAmountKg());
         plantation.setType(plantationDto.getType());
         plantation.setYear(plantationDto.getYear());
+        plantation.setUpdatedAt(new Date());
         plantation.setSeed(seed);
         this.plantationRepository.save(plantation);
         return Optional.of(plantation);
