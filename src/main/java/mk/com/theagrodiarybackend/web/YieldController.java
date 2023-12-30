@@ -3,6 +3,8 @@ package mk.com.theagrodiarybackend.web;
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Yield;
 import mk.com.theagrodiarybackend.model.dto.YieldDto;
+import mk.com.theagrodiarybackend.model.dto.YieldSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.YieldSummaryByYearAndSeedAndType;
 import mk.com.theagrodiarybackend.service.YieldService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,15 @@ public class YieldController {
         return this.yieldService.findAllByPerson();
     }
 
+    @GetMapping("/statistics1")
+    public List<YieldSummaryByYearAndSeed> yieldSummaryByYearAndSeed () {
+        return this.yieldService.yieldSummaryByYearAndSeed();
+    }
+
+    @GetMapping("/statistics2")
+    public List<YieldSummaryByYearAndSeedAndType> yieldSummaryByYearAndSeedAndType () {
+        return this.yieldService.yieldSummaryByYearAndSeedAndType();
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Yield> listById(@PathVariable Integer id) {
         return this.yieldService.findById(id)

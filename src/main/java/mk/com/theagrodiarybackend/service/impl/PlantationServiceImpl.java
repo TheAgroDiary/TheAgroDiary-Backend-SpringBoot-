@@ -55,20 +55,44 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public List<PlantationSummaryByYearAndSeed> plantationSummaryByYearAndSeed() {
-        List<Tuple> tuples = this.plantationRepository.countPlantationsByYearAndSeed();
 
-        return tuples.stream().map(tuple -> {
-            Integer year = tuple.get(0, Integer.class);
-            String seedName = tuple.get(1, String.class);
-            Double totalAmountKg = tuple.get(2, Double.class);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            return new PlantationSummaryByYearAndSeed(year, seedName, totalAmountKg);
-        }).collect(Collectors.toList());
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+
+            List<Tuple> tuples = this.plantationRepository.sumPlantationsByYearAndSeed(personId);
+
+            return tuples.stream().map(tuple -> {
+                Integer year = tuple.get(0, Integer.class);
+                String seedName = tuple.get(1, String.class);
+                Double totalAmountKg = tuple.get(2, Double.class);
+
+                return new PlantationSummaryByYearAndSeed(year, seedName, totalAmountKg);
+            }).collect(Collectors.toList());
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
     public List<PlantationSummaryByYearAndSeedAndType> plantationSummaryByYearAndSeedAndType() {
-        return this.plantationRepository.countPlantationsByYearAndSeedAAndType();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.plantationRepository.sumPlantationsByYearAndSeedAAndType(personId);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

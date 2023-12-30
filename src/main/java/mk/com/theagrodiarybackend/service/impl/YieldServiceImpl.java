@@ -5,6 +5,8 @@ import mk.com.theagrodiarybackend.model.Person;
 import mk.com.theagrodiarybackend.model.Seed;
 import mk.com.theagrodiarybackend.model.Yield;
 import mk.com.theagrodiarybackend.model.dto.YieldDto;
+import mk.com.theagrodiarybackend.model.dto.YieldSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.YieldSummaryByYearAndSeedAndType;
 import mk.com.theagrodiarybackend.model.exception.SeedNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.UserNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.YieldNotFountException;
@@ -47,6 +49,37 @@ public class YieldServiceImpl implements YieldService {
             return this.yieldRepository.findAllByPerson(personId);
         }
         return null;
+    }
+
+    @Override
+    public List<YieldSummaryByYearAndSeed> yieldSummaryByYearAndSeed() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.yieldRepository.sumYieldByYearAndSeed(personId);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<YieldSummaryByYearAndSeedAndType> yieldSummaryByYearAndSeedAndType() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+            return this.yieldRepository.sumYieldByYearAndSeedAndType(personId);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

@@ -5,6 +5,8 @@ import mk.com.theagrodiarybackend.model.Person;
 import mk.com.theagrodiarybackend.model.Revenue;
 import mk.com.theagrodiarybackend.model.Seed;
 import mk.com.theagrodiarybackend.model.dto.RevenueDto;
+import mk.com.theagrodiarybackend.model.dto.RevenueSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.TotalRevenueSummaryByYear;
 import mk.com.theagrodiarybackend.model.exception.RevenueNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.SeedNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.UserNotFoundException;
@@ -52,6 +54,38 @@ public class RevenueServiceImpl implements RevenueService {
     public Optional<Revenue> findById(Integer revenueId) {
         return Optional.of(this.revenueRepository.findByRevenueId(revenueId)
                 .orElseThrow(() -> new RevenueNotFoundException(revenueId)));
+    }
+
+    @Override
+    public List<RevenueSummaryByYearAndSeed> revenueSummaryByYearAndSeed() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+
+            return this.revenueRepository.revenueSummaryByYearAndSeed(personId);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<TotalRevenueSummaryByYear> totalRevenueByYear() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+
+            return this.revenueRepository.totalRevenueSummaryByYear(personId);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

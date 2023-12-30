@@ -23,14 +23,16 @@ public interface PlantationRepository extends JpaRepository<Plantation, Integer>
     @Query("select p.year, s.seedName, sum (p.amountKg) as totalAmountKg " +
             "from Plantation p " +
             "join Seed s on p.seed.seedId = s.seedId " +
+            "where p.person.personId = :personId " +
             "group by p.year, s.seedName " +
             "order by 1 asc")
-    List<Tuple> countPlantationsByYearAndSeed();
+    List<Tuple> sumPlantationsByYearAndSeed(Integer personId);
 
     @Query("select new mk.com.theagrodiarybackend.model.dto.PlantationSummaryByYearAndSeedAndType (p.year, s.seedName, p.type, sum (p.amountKg)) as totalAmountKg " +
             "from Plantation p " +
             "join Seed s on p.seed.seedId = s.seedId " +
+            "where p.person.personId = :personId " +
             "group by p.year, s.seedName, p.type " +
             "order by 1 asc")
-    List<PlantationSummaryByYearAndSeedAndType> countPlantationsByYearAndSeedAAndType();
+    List<PlantationSummaryByYearAndSeedAndType> sumPlantationsByYearAndSeedAAndType(Integer personId);
 }

@@ -6,6 +6,8 @@ import mk.com.theagrodiarybackend.model.Expense;
 import mk.com.theagrodiarybackend.model.Person;
 import mk.com.theagrodiarybackend.model.Seed;
 import mk.com.theagrodiarybackend.model.dto.ExpenseDto;
+import mk.com.theagrodiarybackend.model.dto.ExpenseSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.TotalExpenseSummaryByYear;
 import mk.com.theagrodiarybackend.model.exception.CategoryNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.ExpenseNotFoundException;
 import mk.com.theagrodiarybackend.model.exception.SeedNotFoundException;
@@ -56,6 +58,38 @@ public class ExpenseServiceImpl implements ExpenseService {
     public Optional<Expense> findById(Integer expenseId) {
         return Optional.of(this.expenseRepository.findByExpenseId(expenseId)
                 .orElseThrow(() -> new ExpenseNotFoundException(expenseId)));
+    }
+
+    @Override
+    public List<ExpenseSummaryByYearAndSeed> expenseSummaryByYearAndSeed() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+
+            return this.expenseRepository.expenseSummaryByYearAndSeed(personId);
+        }
+        else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<TotalExpenseSummaryByYear> totalExpenseByYear() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            System.out.println("Current user is: " + username);
+            Integer personId = this.personRepository.getPersonIdByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException(username));
+
+            return this.expenseRepository.totalExpenseSummaryByYear(personId);
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

@@ -3,6 +3,8 @@ package mk.com.theagrodiarybackend.web;
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Expense;
 import mk.com.theagrodiarybackend.model.dto.ExpenseDto;
+import mk.com.theagrodiarybackend.model.dto.ExpenseSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.TotalExpenseSummaryByYear;
 import mk.com.theagrodiarybackend.service.ExpenseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,16 @@ public class ExpenseController {
     @GetMapping("/my")
     public List<Expense> listAllByPerson (){
         return this.expenseService.findAllByPerson();
+    }
+
+    @GetMapping("/statistics1")
+    public List<ExpenseSummaryByYearAndSeed> expenseSummaryByYearAndSeed () {
+        return this.expenseService.expenseSummaryByYearAndSeed();
+    }
+
+    @GetMapping("/statistics2")
+    public List<TotalExpenseSummaryByYear> totalExpenseSummaryByYear () {
+        return this.expenseService.totalExpenseByYear();
     }
 
     @GetMapping("/{id}")

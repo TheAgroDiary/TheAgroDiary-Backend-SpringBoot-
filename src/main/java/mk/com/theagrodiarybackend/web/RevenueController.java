@@ -3,6 +3,8 @@ package mk.com.theagrodiarybackend.web;
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Revenue;
 import mk.com.theagrodiarybackend.model.dto.RevenueDto;
+import mk.com.theagrodiarybackend.model.dto.RevenueSummaryByYearAndSeed;
+import mk.com.theagrodiarybackend.model.dto.TotalRevenueSummaryByYear;
 import mk.com.theagrodiarybackend.service.RevenueService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,16 @@ public class RevenueController {
     @GetMapping("/my")
     public List<Revenue> listAllByPerson (){
         return this.revenueService.findAllByPerson();
+    }
+
+    @GetMapping("/statistics1")
+    public List<RevenueSummaryByYearAndSeed> revenueSummaryByYearAndSeed () {
+        return this.revenueService.revenueSummaryByYearAndSeed();
+    }
+
+    @GetMapping("/statistics2")
+    public List<TotalRevenueSummaryByYear> totalRevenueSummaryByYear () {
+        return this.revenueService.totalRevenueByYear();
     }
 
     @GetMapping("/{id}")
