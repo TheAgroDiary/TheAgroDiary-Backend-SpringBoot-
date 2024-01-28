@@ -14,6 +14,7 @@ import mk.com.theagrodiarybackend.model.exception.UserNotFoundException;
 import mk.com.theagrodiarybackend.repository.PersonRepository;
 import mk.com.theagrodiarybackend.repository.PlantationRepository;
 import mk.com.theagrodiarybackend.repository.SeedRepository;
+import mk.com.theagrodiarybackend.service.PersonService;
 import mk.com.theagrodiarybackend.service.PlantationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +34,7 @@ public class PlantationServiceImpl implements PlantationService {
     private PlantationRepository plantationRepository;
     private PersonRepository personRepository;
     private SeedRepository seedRepository;
+    private PersonService personService;
 
     @Override
     public List<Plantation> findAll() {
@@ -41,16 +43,14 @@ public class PlantationServiceImpl implements PlantationService {
 
     @Override
     public List<Plantation> findAllByPerson() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Person person = null;
-        if(authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            System.out.println("Current user is: " + username);
-            Integer personId = this.personRepository.getPersonIdByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException(username));
+        try {
+            Optional<Person> person = this.personService.findByUsername();
+            Integer personId = person.get().getPersonId();
             return this.plantationRepository.findAllByPerson(personId);
         }
-        return null;
+        catch (Error e) {
+            return null;
+        }
     }
 
     @Override
