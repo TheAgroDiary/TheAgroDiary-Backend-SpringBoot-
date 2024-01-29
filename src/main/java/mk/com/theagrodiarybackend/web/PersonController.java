@@ -3,12 +3,10 @@ package mk.com.theagrodiarybackend.web;
 
 import lombok.AllArgsConstructor;
 import mk.com.theagrodiarybackend.model.Person;
+import mk.com.theagrodiarybackend.model.dto.PersonDto;
 import mk.com.theagrodiarybackend.service.PersonService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:9091", "http://localhost:3000"})
@@ -23,5 +21,12 @@ public class PersonController {
         return this.personService.findByUsername()
                 .map(person -> ResponseEntity.ok().body(person))
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/editUser")
+    public ResponseEntity<Person> editUserInfo(@RequestBody PersonDto personDto) {
+        return this.personService.editUserInfo(personDto)
+                .map(person -> ResponseEntity.ok().body(person))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }
